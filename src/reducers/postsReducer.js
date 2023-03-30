@@ -1,9 +1,9 @@
 import { ADD_NUMBER, SUBTRACT_NUMBER } from "../constants/constant";
 
-function counterReducer(state = 0, action) {
+function postsReducer(state = [], action) {
   switch (action.type) {
-    case ADD_NUMBER:
-      return state + action.payload;
+    case ADD_POSTS:
+      return action.payload;
     case SUBTRACT_NUMBER:
       return state - 1;
     default:
@@ -11,4 +11,4 @@ function counterReducer(state = 0, action) {
   }
 }
 
-export default counterReducer;
+export default postsReducer;

@@ -1,9 +1,10 @@
 import { ADD_NUMBER, SUBTRACT_NUMBER } from "../constants/constant";
 
-export const addNumber = () => {
+export const addNumber = (incrementBy) => {
   // action creator function
   return {
     type: ADD_NUMBER,
+    payload: incrementBy,
   };
 };
 

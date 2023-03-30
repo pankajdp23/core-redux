@@ -34,7 +34,7 @@ function App() {
       <div>Counter: {count}</div>
       <button
         onClick={() => {
-          dispatch(addNumber()); // calls reducer when action is dispatched
+          dispatch(addNumber(5)); // calls reducer when action is dispatched
           // setCounter(count);
         }}
       >
