@@ -2,6 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import store from "./store/store";
 import { addNumber, subtractNumber } from "./actions/counterActions";
+import { connect } from "react-redux";
 /*
 let sum = 10;
 function add(a, b) {
@@ -25,29 +26,32 @@ store.dispatch({
 });*/
 //console.log("counter", store.getState());
 
-function App() {
-  const [counter, setCounter] = useState(store.getState());
+function App(props) {
+  const { count } = props;
+  console.log("count", count);
+  // const [counter, setCounter] = useState(count);
   return (
     <div className="App">
-      <div>Counter: {counter}</div>
+      <div>Counter: {count}</div>
       <button
         onClick={() => {
           store.dispatch(addNumber()); // calls reducer when action is dispatched
-          setCounter(store.getState());
+          // setCounter(count);
         }}
       >
         Add
       </button>
-      <button
-        onClick={() => {
-          store.dispatch(subtractNumber());
-          setCounter(store.getState());
-        }}
-      >
-        Subtract
-      </button>
+      <button onClick={() => store.dispatch(subtractNumber())}>Subtract</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log("state", state);
+
+  return {
+    count: state,
+  };
+};
+
+export default connect(mapStateToProps)(App);
