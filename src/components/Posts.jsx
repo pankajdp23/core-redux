@@ -1,21 +1,28 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPosts } from "../actions/postsActions";
+import useFetch from "../custom-hooks/useFetch";
 
 const Posts = () => {
   const posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
+  const { data, loading, error } = useFetch(
+    "https://jsonplaceholder.typicode.com/posts"
+  );
+
   useEffect(() => {
-    const getPosts = async () => {
-      const { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      console.log({ data });
-      dispatch(addPosts(data));
-    };
-    getPosts();
-  }, []);
+    dispatch(addPosts(data));
+  }, [data]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <ul>
       {posts.map(({ body, id, title }) => (
