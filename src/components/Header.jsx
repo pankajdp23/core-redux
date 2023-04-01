@@ -13,6 +13,9 @@ const Header = () => {
       <li>
         <NavLink to="/albums">Albums</NavLink>
       </li>
+      <li>
+        <NavLink to="/todos">Todos</NavLink>
+      </li>
     </ul>
   );
 };

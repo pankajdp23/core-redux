@@ -5,7 +5,7 @@ import { addPosts } from "../actions/postsActions";
 import useFetch from "../custom-hooks/useFetch";
 
 const Posts = () => {
-  const posts = useSelector((state) => state.posts);
+  const { posts } = useSelector((state) => state);
   const dispatch = useDispatch();
   const { data, loading, error } = useFetch(
     "https://jsonplaceholder.typicode.com/posts"
