@@ -1,20 +1,14 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUsers } from "../actions/usersActions";
-import useFetch from "../custom-hooks/useFetch";
+import { startAddUsers } from "../actions/usersActions";
 
 const Users = () => {
-  //use useFetch hook
-  const { data, error, loading } = useFetch(
-    "https://jsonplaceholder.typicode.com/users"
-  );
-  const {users} = useSelector((state) => state);
+  const { loading, error, data: users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(addUsers(data));
-  }, [data]);
+    dispatch(startAddUsers());
+  }, [dispatch]);
 
   if (loading) {
     return <p>Loading...</p>;
