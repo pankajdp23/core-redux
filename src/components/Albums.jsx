@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useFetch from "../custom-hooks/useFetch";
-import { addAlbums } from "../actions/albumsActions";
+import { startAddAlbums } from "../actions/albumsActions";
 
 const Albums = () => {
-const {albums} = useSelector(state => state);
-const dispatch = useDispatch();
-const {data, error, loading} = useFetch("https://jsonplaceholder.typicode.com/albums");
+  const { data: albums, loading, error } = useSelector((state) => state.albums);
+  const dispatch = useDispatch();
 
-useEffect (()=> {
-    dispatch(addAlbums(data));
-},[data])
+  useEffect(() => {
+    dispatch(startAddAlbums());
+  }, [dispatch]);
 
-if (loading) {
+  if (loading) {
     return <p>Loading...</p>;
   }
 
@@ -21,8 +19,8 @@ if (loading) {
   }
   return (
     <div>
-        {albums.map(({ id, title }) => (
-          <h2 key={id}>{title}</h2>
+      {albums.map(({ id, title }) => (
+        <h2 key={id}>{title}</h2>
       ))}
     </div>
   );
