@@ -8,3 +8,11 @@
   list-style: none;
   gap: 2rem;
 }
+
+.loading {
+  text-align: center;
+}
+
+.error {
+  color: #ff0000;
+}

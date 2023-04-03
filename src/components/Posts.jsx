@@ -1,26 +1,21 @@
-import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPosts } from "../actions/postsActions";
-import useFetch from "../custom-hooks/useFetch";
+import { startAddPosts } from "../actions/postsActions";
 
 const Posts = () => {
-  const { posts } = useSelector((state) => state);
+  const { loading, error, data: posts } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
-  const { data, loading, error } = useFetch(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
 
   useEffect(() => {
-    dispatch(addPosts(data));
-  }, [data]);
+    dispatch(startAddPosts());
+  }, [dispatch]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="loading">Loading...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="error">{error}</p>;
   }
 
   return (
