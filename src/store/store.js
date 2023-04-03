@@ -3,9 +3,9 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import postsReducer from "../reducers/postsReducer";
 import usersReducer from "../reducers/usersReducer";
 import albumsReducers from "../reducers/albumsReducers";
-import { todosReducer } from "../reducers/todosReducer";
 
 import thunk from "redux-thunk";
+import todosReducer from "../reducers/todosReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

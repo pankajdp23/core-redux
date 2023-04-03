@@ -1,19 +1,14 @@
 import React, { useEffect } from "react";
-import useFetch from "../custom-hooks/useFetch";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodos } from "../actions/todosAction";
+import { startAddTodos } from "../actions/todosAction";
 
 const Todos = () => {
-  const { data, error, loading } = useFetch(
-    "https://jsonplaceholder.typicode.com/todos"
-  );
   const dispatch = useDispatch();
-  const { todos } = useSelector((state) => state);
-  console.log("todos", todos);
+  const { data: todos, loading, error } = useSelector((state) => state.todos);
 
   useEffect(() => {
-    dispatch(addTodos(data));
-  }, [data]);
+    dispatch(startAddTodos());
+  }, [dispatch]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -25,8 +20,8 @@ const Todos = () => {
   return (
     <React.Fragment>
       {todos.map((todo) => (
-        <div>
-          <h3 key={todo.id}>{todo.title}</h3>
+        <div key={todo.id}>
+          <h3>{todo.title}</h3>
           <p>Completed: {"" + todo.completed}</p>
         </div>
       ))}
