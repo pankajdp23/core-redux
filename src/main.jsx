@@ -4,12 +4,13 @@ import App from "./App";
 import "./index.css";
 import store from "./store/store";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Posts from "./components/Posts";
 import Users from "./components/Users";
 import Albums from "./components/Albums";
 import Todos from "./components/Todos";
+import SinglePost from "./components/SinglePost";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,10 +18,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Posts />} />
+          <Route path="/" element={<Navigate to="/posts" />} />
+          <Route path="/posts/*" element={<Posts />}>
+            <Route path=":id" element={<SinglePost />} />
+          </Route>
           <Route path="/users" element={<Users />} />
           <Route path="/albums" element={<Albums />} />
-          <Route path= "/todos" element={<Todos />} />
+          <Route path="/todos" element={<Todos />} />
         </Routes>
       </BrowserRouter>
     </Provider>

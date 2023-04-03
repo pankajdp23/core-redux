@@ -25,7 +25,10 @@ const Todos = () => {
   return (
     <React.Fragment>
       {todos.map((todo) => (
-        <h3 key={todo.id}>{todo.title}</h3>
+        <div>
+          <h3 key={todo.id}>{todo.title}</h3>
+          <p>Completed: {"" + todo.completed}</p>
+        </div>
       ))}
     </React.Fragment>
   );
