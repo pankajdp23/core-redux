@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startAddTodos } from "../actions/todosAction";
+import { Link, Outlet } from "react-router-dom";
 
 const Todos = () => {
   const dispatch = useDispatch();
@@ -19,10 +20,13 @@ const Todos = () => {
   }
   return (
     <React.Fragment>
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          <h3>{todo.title}</h3>
-          <p>Completed: {"" + todo.completed}</p>
+      <Outlet />
+      {todos.map(({id, title, completed}) => (
+        <div key={id}>
+          <Link to={`/todos/${id}`} state={{id, title, completed}}>
+            <h3>{id + ". " + title}</h3>
+          </Link>
+          <p>Completed: {"" +completed}</p>
         </div>
       ))}
     </React.Fragment>
