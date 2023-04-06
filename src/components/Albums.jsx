@@ -1,21 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startAddAlbums } from "../actions/albumsActions";
+import axios from "axios";
+import { addAlbumsError, addAlbumsLoading, addAlbumsSuccess } from "../reducers/features/albumsSlice";
 
 const Albums = () => {
   const { data: albums, loading, error } = useSelector((state) => state.albums);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(startAddAlbums());
-  }, [dispatch]);
+   const getAlbums = async () => {
+    try {
+      dispatch(addAlbumsLoading());
+      const {data} = await axios.get("https://jsonplaceholder.typicode.com/albums");
+      dispatch(addAlbumsSuccess(data));
+      console.log(data)
+    } catch (err) {
+      dispatch(addAlbumsError());
+    } 
+   }
+   getAlbums();
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="error">Something went wrong. Please try again.</p>;
   }
   return (
     <div>

@@ -1,13 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startAddUsers } from "../actions/usersActions";
+import {
+  addUsersError,
+  addUsersLoading,
+  addUsersSuccess,
+} from "../reducers/features/usersSlice";
+import axios from "axios";
 
 const Users = () => {
   const { loading, error, data: users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(startAddUsers());
+    const getUsers = async () => {
+      try {
+        dispatch(addUsersLoading());
+        const { data: response } = await axios.get(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        console.log({ response });
+        dispatch(addUsersSuccess(response));
+      } catch (error) {
+        console.log(error);
+        dispatch(addUsersError());
+      }
+    };
+
+    getUsers();
   }, [dispatch]);
 
   if (loading) {
@@ -15,7 +34,7 @@ const Users = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="error">Something went wrong. Try again later.</p>;
   }
   return (
     <ul>

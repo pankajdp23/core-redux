@@ -1,14 +1,29 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startAddTodos } from "../actions/todosAction";
 import { Link, Outlet } from "react-router-dom";
+import { addTodosError, addTodosLoading, addTodosSuccess } from "../reducers/features/todosSlice";
+import axios from "axios";
 
 const Todos = () => {
   const dispatch = useDispatch();
   const { data: todos, loading, error } = useSelector((state) => state.todos);
 
   useEffect(() => {
-    dispatch(startAddTodos());
+    const getPosts = async () => {
+      try {
+        dispatch(addTodosLoading());
+        const { data: response } = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos"
+        );
+        console.log({ response });
+        dispatch(addTodosSuccess(response));
+      } catch (error) {
+        console.log(error);
+        dispatch(addTodosError());
+      }
+    };
+
+    getPosts();
   }, [dispatch]);
 
   if (loading) {
@@ -16,7 +31,7 @@ const Todos = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="error">Something went wrong</p>;
   }
   return (
     <React.Fragment>

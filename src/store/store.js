@@ -1,22 +1,16 @@
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-// import counterReducer from "../reducers/postsReducer";
-import postsReducer from "../reducers/postsReducer";
-import usersReducer from "../reducers/usersReducer";
-import albumsReducers from "../reducers/albumsReducers";
+import { configureStore } from "@reduxjs/toolkit";
+import postsReducer from "../reducers/features/postsSlice";
+import userReducer from "../reducers/features/usersSlice";
+import albumsReducer from "../reducers/features/albumsSlice";
+import todosReducer from "../reducers/features/todosSlice";
 
-import thunk from "redux-thunk";
-import todosReducer from "../reducers/todosReducer";
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  combineReducers({
+const store = configureStore({
+  reducer: {
     posts: postsReducer,
-    users: usersReducer,
-    albums: albumsReducers,
+    users: userReducer,
+    albums: albumsReducer,
     todos: todosReducer,
-  }),
-  composeEnhancers(applyMiddleware(thunk))
-);
+  },
+});
 
 export default store;
