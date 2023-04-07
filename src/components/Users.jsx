@@ -1,33 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addUsersError,
-  addUsersLoading,
-  addUsersSuccess,
-} from "../reducers/features/usersSlice";
-import axios from "axios";
+import { getUsers } from "../reducers/features/usersSlice";
 
 const Users = () => {
   const { loading, error, data: users } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        dispatch(addUsersLoading());
-        const { data: response } = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        console.log({ response });
-        dispatch(addUsersSuccess(response));
-      } catch (error) {
-        console.log(error);
-        dispatch(addUsersError());
-      }
-    };
-
-    getUsers();
-  }, [dispatch]);
+    dispatch(getUsers());
+  }, []);
 
   if (loading) {
     return <p>Loading...</p>;

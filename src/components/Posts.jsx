@@ -1,12 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import {
-  addPostsLoading,
-  addPostsSuccess,
-  addPostsError,
-} from "../reducers/features/postsSlice";
-import axios from "axios";
+import { getPosts } from "../reducers/features/postsSlice";
 
 const Posts = () => {
   const { loading, error, data: posts } = useSelector((state) => state.posts);
@@ -14,21 +9,7 @@ const Posts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        dispatch(addPostsLoading());
-        const { data: response } = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts"
-        );
-        console.log({ response });
-        dispatch(addPostsSuccess(response));
-      } catch (error) {
-        console.log(error);
-        dispatch(addPostsError());
-      }
-    };
-
-    getPosts();
+    dispatch(getPosts());
   }, [dispatch]);
 
   if (loading) {
