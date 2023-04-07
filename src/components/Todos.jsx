@@ -1,29 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { addTodosError, addTodosLoading, addTodosSuccess } from "../reducers/features/todosSlice";
-import axios from "axios";
+import { getTodos } from "../reducers/features/todosSlice";
 
 const Todos = () => {
   const dispatch = useDispatch();
   const { data: todos, loading, error } = useSelector((state) => state.todos);
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        dispatch(addTodosLoading());
-        const { data: response } = await axios.get(
-          "https://jsonplaceholder.typicode.com/todos"
-        );
-        console.log({ response });
-        dispatch(addTodosSuccess(response));
-      } catch (error) {
-        console.log(error);
-        dispatch(addTodosError());
-      }
-    };
-
-    getPosts();
+    dispatch(getTodos())
   }, [dispatch]);
 
   if (loading) {
